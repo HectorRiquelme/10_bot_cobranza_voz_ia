@@ -8,7 +8,7 @@ Sistema de cobranza automatizada que genera scripts personalizados, sintetiza vo
 
 - **Backend:** Python, FastAPI, SQLite, httpx, Pydantic
 - **Frontend:** React, Vite, Tailwind CSS
-- **APIs:** Anthropic (generación de scripts), Eleven Labs (voz), Twilio (llamadas)
+- **APIs:** OpenAI GPT-4o (generación de scripts), Eleven Labs (voz), Twilio (llamadas)
 
 ## Instalación
 
@@ -44,7 +44,7 @@ npm run dev
 
 | Variable | Descripción |
 |---|---|
-| `ANTHROPIC_API_KEY` | API key de Anthropic |
+| `OPENAI_API_KEY` | API key de OpenAI |
 | `ELEVENLABS_API_KEY` | API key de Eleven Labs |
 | `ELEVENLABS_VOICE_ID` | ID de la voz en Eleven Labs |
 | `TWILIO_ACCOUNT_SID` | Account SID de Twilio |

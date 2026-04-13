@@ -4,7 +4,7 @@ import os
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import FileResponse
 from database import get_db
-from services.anthropic_client import generar_script_cobranza
+from services.openai_client import generar_script_cobranza
 from services.elevenlabs import generar_audio
 from services.twilio_client import realizar_llamada, esta_configurado
 

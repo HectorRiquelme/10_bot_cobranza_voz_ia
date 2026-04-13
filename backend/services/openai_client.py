@@ -1,4 +1,4 @@
-"""Cliente para la API de Anthropic - Generación de scripts de cobranza."""
+"""Cliente para la API de OpenAI - Generación de scripts de cobranza."""
 
 import httpx
 import os
@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
-API_URL = "https://api.anthropic.com/v1/messages"
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+API_URL = "https://api.openai.com/v1/chat/completions"
 
 
 async def generar_script_cobranza(
@@ -16,7 +16,7 @@ async def generar_script_cobranza(
     dias_mora: int,
     rut: str
 ) -> str:
-    """Genera un script de cobranza personalizado usando la API de Anthropic."""
+    """Genera un script de cobranza personalizado usando la API de OpenAI."""
 
     monto_formateado = f"${monto_deuda:,.0f}"
 
@@ -39,16 +39,15 @@ async def generar_script_cobranza(
     )
 
     headers = {
-        "x-api-key": ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01",
-        "content-type": "application/json",
+        "Authorization": f"Bearer {OPENAI_API_KEY}",
+        "Content-Type": "application/json",
     }
 
     payload = {
-        "model": "claude-sonnet-4-20250514",
+        "model": "gpt-4o",
         "max_tokens": 1024,
-        "system": system_prompt,
         "messages": [
+            {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_message}
         ],
     }
@@ -57,4 +56,4 @@ async def generar_script_cobranza(
         response = await client.post(API_URL, headers=headers, json=payload)
         response.raise_for_status()
         data = response.json()
-        return data["content"][0]["text"]
+        return data["choices"][0]["message"]["content"]
